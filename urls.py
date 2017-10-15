@@ -20,8 +20,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+
+    # Core
 	url(r'^', include('sysOS.core.urls', namespace='core')),
 	url(r'^customer/', include('sysOS.core.urls', namespace='core')),
+
+    #Workshop
+    url(r'^workshop/', include('sysOS.workshop.urls', namespace='workshop')),
+
+    # RESTService
+    url(r'^api/', include('sysOS.API.urls', namespace='api')),
+
+    # Admin
 	url(r'^admin/', admin.site.urls),
 ]
 

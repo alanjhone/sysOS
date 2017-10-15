@@ -38,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'sysOS.core',
     'localflavor',
+    'rest_framework',
+    'sysOS.API',
+    'sysOS.core',
+    'sysOS.workshop',
+    
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,5 @@
 import datetime
+from django.template.defaultfilters import slugify
 
 def format_zipcode(value):
     if len(value) == 8:
@@ -17,7 +18,6 @@ def format_phone(value):
     '(84) 92010-8484'
     """
 
-    print('aq')
     if len(value) == 11:
         return "(%s) %s-%s" % (value[:2], value[2:7], value[7:])
     elif len(value) == 10:
@@ -54,3 +54,6 @@ def format_datetime(data):
         return data.strftime('%d/%m/%Y %H:%M:%S')
     except:
         return data
+
+def slugfy_data(text):
+    return slugify(text)
