@@ -1,0 +1,83 @@
+customer_register{% extends 'base.html' %}
+
+
+{% block content %}
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Cadastro <small>de cliente</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active">
+                    <i class="fa fa-users" aria-hidden="true"></i></i> Cliente
+                </li>
+            </ol>
+        </div>
+    </div>
+    <!-- /.row -->
+
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<form action="" method="post" prependId="false">
+				{% csrf_token %}
+				
+				{% for field in customer_form %}
+		            <div class="form-group col-md-6">
+		                <label>{{ field.label_tag }}</label>
+		                {{ field }}
+		            </div>
+				{% endfor %}
+
+				{% for f in address_form.management_form %}
+				  {{ f }}
+				{% endfor %}
+				
+				{% for field in address_form.forms.0 %}
+					{{ field.id }}
+					{% if not field.is_hidden %}
+			            <div class="form-group col-md-6">
+			                <label>{{ field.label_tag }}</label>
+			                {{ field }}
+			            </div>
+		            {% endif %}
+				{% endfor %}
+
+				<div class="row">
+					<div class="col-md-12">
+						<button type="submit" style="margin: 20px 0px 0 15px;" class="btn btn-primary">Cadastrar</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}
+
+
+{% block js %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('[id$="id_nested-0-zipcode"]').on('focusout', function() {
+        var zipcode = $(this).val();
+
+        $.get('http://viacep.com.br/ws/' + zipcode.replace('-', '') + '/json', function(data) {
+        	console.log()
+        	// UF
+	        $('select[id$="id_nested-0-state"] option[value="' + data.uf + '"]').prop('selected', 'selected');
+	        // Localidade
+	        $('input[id$="id_nested-0-city"]').val(data.localidade);
+	        // Bairro
+	        $('input[id$="id_nested-0-neighborhood"]').val(data.bairro);
+	        // Rua
+	        $('input[id$="id_nested-0-street"]').val(data.logradouro);
+	        $('input[id$="id_nested-0-number"]').focus();
+        });
+      });
+    });
+  </script>
+
+{% endblock %}
